@@ -69,7 +69,4 @@ class Shop {
   }
 }
 
-module.exports = {
-  Item,
-  Shop,
-};
+export { Item, Shop };

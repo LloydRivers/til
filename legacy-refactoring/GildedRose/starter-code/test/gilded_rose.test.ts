@@ -1,5 +1,6 @@
-import { Shop, Item } from "../src/gilded_rose";
-import tests from "../tests.json";
+import { Item } from "../src/class/Item";
+import { Shop } from "../src/class/Shop";
+import tests from "../tests";
 
 describe("Gilded Rose", function () {
   for (const test of tests) {

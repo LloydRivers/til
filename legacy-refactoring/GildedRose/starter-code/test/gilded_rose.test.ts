@@ -23,32 +23,32 @@ describe("Gilded Rose", function () {
       expect(outputQuality).toBe(outputQuality);
     });
   }
-  // it("generates the expected tests", function () {
-  //   const names = [
-  //     "Aged Brie",
-  //     "Backstage passes to a TAFKAL80ETC concert",
-  //     "Sulfuras, Hand of Ragnaros",
-  //     "normal item",
-  //   ];
-  //   const tests = [];
+  it("generates the expected tests", function () {
+    const names = [
+      "Aged Brie",
+      "Backstage passes to a TAFKAL80ETC concert",
+      "Sulfuras, Hand of Ragnaros",
+      "normal item",
+    ];
+    const tests = [];
 
-  //   const [minSellIn, maxSellIn] = [-1, 12];
-  //   const [minQuality, maxQuality] = [-1, 51];
+    const [minSellIn, maxSellIn] = [-1, 12];
+    const [minQuality, maxQuality] = [-1, 51];
 
-  //   for (const name of names) {
-  //     for (let sellIn = minSellIn; sellIn < maxSellIn; sellIn++) {
-  //       for (let quality = minQuality; quality < maxQuality; quality++) {
-  //         const gildedRose = new Shop([new Item(name, sellIn, quality)]);
-  //         const items = gildedRose.updateQuality();
-  //         const outputSellIn = items[0].sellIn;
-  //         const outputQuality = items[0].quality;
+    for (const name of names) {
+      for (let sellIn = minSellIn; sellIn < maxSellIn; sellIn++) {
+        for (let quality = minQuality; quality < maxQuality; quality++) {
+          const gildedRose = new Shop([new Item(name, sellIn, quality)]);
+          const items = gildedRose.updateQuality();
+          const outputSellIn = items[0].sellIn;
+          const outputQuality = items[0].quality;
 
-  //         tests.push([name, sellIn, quality, outputSellIn, outputQuality]);
-  //       }
-  //     }
-  //   }
-  //   // Am I abke to pipe this into a file to save it?
-  //   const json = JSON.stringify(tests, null, 2);
-  //   writeFileSync("tests.json", json);
-  // });
+          tests.push([name, sellIn, quality, outputSellIn, outputQuality]);
+        }
+      }
+    }
+    // TODO: Credit to Andrew Burgess in Readme
+    const json = JSON.stringify(tests, null, 2);
+    writeFileSync("tests.json", json);
+  });
 });

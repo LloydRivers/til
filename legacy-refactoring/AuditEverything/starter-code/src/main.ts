@@ -1,8 +1,4 @@
-export interface IFileSystem {
-  getFiles(directoryName: string): string[];
-  writeAllText(filePath: string, content: string): void;
-  readAllLines(filePath: string): string[];
-}
+import { IFileSystem } from "./types";
 
 export class AuditManager {
   private readonly maxEntriesPerFile: number;

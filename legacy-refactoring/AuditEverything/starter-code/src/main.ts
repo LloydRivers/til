@@ -1,4 +1,5 @@
 import { IFileSystem } from "./types";
+import { sortByIndex } from "./helpers/fileUtils";
 
 export class AuditManager {
   private readonly maxEntriesPerFile: number;
@@ -17,7 +18,7 @@ export class AuditManager {
 
   addRecord(visitorName: string, timeOfVisit: Date) {
     const filePaths = this.fileSystem.getFiles(this.directoryName);
-    const sorted = this.sortByIndex(filePaths);
+    const sorted = sortByIndex(filePaths);
 
     const newRecord = `${visitorName};${timeOfVisit.toISOString()}`;
 
@@ -40,13 +41,5 @@ export class AuditManager {
       const newFile = `${this.directoryName}/${newName}`;
       this.fileSystem.writeAllText(newFile, newRecord);
     }
-  }
-
-  private sortByIndex(filePaths: string[]): string[] {
-    return filePaths.sort((a, b) => {
-      const aIndex = parseInt(a.match(/audit_(\d+)\.txt$/)?.[1] || "0", 10);
-      const bIndex = parseInt(b.match(/audit_(\d+)\.txt$/)?.[1] || "0", 10);
-      return aIndex - bIndex;
-    });
   }
 }

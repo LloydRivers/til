@@ -1,4 +1,5 @@
-import { AuditManager, IFileSystem } from "../src/main";
+import { AuditManager } from "../src/main";
+import { IFileSystem } from "../src/types";
 
 class MockFileSystem implements IFileSystem {
   files: string[] = [];
@@ -33,7 +34,7 @@ it("adds new visitor to a new file when the last file is full", () => {
   const auditManager = new AuditManager(3, "audits", mockFileSystem);
 
   auditManager.addRecord("Alice", new Date("2019-04-06T17:00:00.000Z"));
-
+  // [ 'audits/audit_2.txt', 'audits/audit_1.txt' ]
   expect(mockFileSystem.files).toContain("audits/audit_3.txt");
   expect(mockFileSystem.fileContents["audits/audit_3.txt"]).toEqual([
     "Alice;2019-04-06T17:00:00.000Z",

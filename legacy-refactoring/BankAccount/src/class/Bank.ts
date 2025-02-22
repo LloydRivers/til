@@ -51,7 +51,7 @@ export class BankAccount implements IBankAccount {
   printStatement(): void {
     const titleColumnWidth = 30;
     const priceColumnWidth = 10;
-    const balanceColumnWidth = 10; // Balance column width
+    const balanceColumnWidth = 10;
 
     console.log("Date       || Amount || Balance");
     console.log("-------------------------------");

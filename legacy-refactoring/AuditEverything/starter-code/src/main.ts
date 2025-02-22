@@ -1,22 +1,14 @@
-/*
-This kata was taken from here: https://sammancoaching.org/kata_descriptions/audit.html
-
-The original was written in Java, and I wanted a chance to refactor it in TypeScript.
-
-I have tried to make it as readable as possible. 
-*/
-
-import { FileHandler } from "./class/FileHandler";
+import { IFileHandler } from "./types";
 
 export class AuditManager {
   private readonly maxEntriesPerFile: number;
   private readonly directoryName: string;
-  private readonly fileHandler: FileHandler;
+  private readonly fileHandler: IFileHandler;
 
   constructor(
     maxEntriesPerFile: number,
     directoryName: string,
-    fileHandler: FileHandler
+    fileHandler: IFileHandler
   ) {
     this.maxEntriesPerFile = maxEntriesPerFile;
     this.directoryName = directoryName;
@@ -27,21 +19,18 @@ export class AuditManager {
     const sortedFiles = this.fileHandler.getSortedFiles(this.directoryName);
     const newRecord = `${visitorName};${timeOfVisit.toISOString()}`;
 
-    // If no files exist, create the first one
     if (sortedFiles.length === 0) {
       return this.createNewFile(newRecord, 1);
     }
 
-    // Get the current file and lines
     const currentFilePath = sortedFiles[sortedFiles.length - 1];
     const lines = this.fileHandler.readFileLines(currentFilePath);
 
-    // If the file is not full, append to it
     if (lines.length < this.maxEntriesPerFile) {
+      console.log("appending to file");
       return this.appendToFile(currentFilePath, lines, newRecord);
     }
 
-    // If the file is full, create a new file
     return this.createNewFile(newRecord, sortedFiles.length + 1);
   }
 

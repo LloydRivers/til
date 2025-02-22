@@ -1,25 +1,100 @@
-import { describe, it, expect, vi } from "vitest";
+import { vi, Mock } from "vitest";
 import { AuditManager } from "../src/main";
-import { FileHandler } from "../src/class/FileHandler";
-import { IFileSystem } from "../src/types/index";
+
+type MockIFileHandler = {
+  getSortedFiles: Mock<(directory: string) => string[]>;
+  readFileLines: Mock<(filePath: string) => string[]>;
+  writeFile: Mock<(filePath: string, content: string) => void>;
+};
 
 describe("AuditManager", () => {
-  it("should create a new file when no files exist", () => {
-    const mockFileSystem: IFileSystem = {
-      getFiles: vi.fn().mockReturnValue([]),
-      writeAllText: vi.fn(),
-      readAllLines: vi.fn(),
+  let mockFileHandler: MockIFileHandler;
+  let auditManager: AuditManager;
+
+  beforeEach(() => {
+    mockFileHandler = {
+      getSortedFiles: vi.fn(),
+      readFileLines: vi.fn(),
+      writeFile: vi.fn(),
     };
 
-    const fileHandler = new FileHandler(mockFileSystem);
+    auditManager = new AuditManager(3, "/audit", mockFileHandler);
+  });
 
-    const auditManager = new AuditManager(2, "test_directory", fileHandler);
+  describe("addRecord", () => {
+    it("creates first file when no files exist", () => {
+      // Arrange
+      mockFileHandler.getSortedFiles.mockReturnValue([]);
+      const visitorName = "Alice";
+      const timeOfVisit = new Date("2021-01-01T00:00:00Z");
 
-    auditManager.addRecord("John Doe", new Date("2023-01-01T10:00:00Z"));
+      // Act
+      auditManager.addRecord(visitorName, timeOfVisit);
 
-    expect(mockFileSystem.writeAllText).toHaveBeenCalledWith(
-      "test_directory/audit_1.txt",
-      "John Doe;2023-01-01T10:00:00.000Z"
-    );
+      // Assert
+      expect(mockFileHandler.writeFile).toHaveBeenCalledWith(
+        "/audit/audit_1.txt",
+        "Alice;2021-01-01T00:00:00.000Z"
+      );
+    });
+
+    it("appends to existing file when not at capacity", () => {
+      // Arrange
+      console.log(typeof mockFileHandler.getSortedFiles);
+
+      mockFileHandler.getSortedFiles.mockReturnValue(["/audit/audit_1.txt"]);
+      mockFileHandler.readFileLines.mockReturnValue([
+        "Bob;2021-01-01T00:00:00.000Z",
+      ]);
+
+      // Act
+      auditManager.addRecord("Alice", new Date("2021-01-01T01:00:00Z"));
+
+      // Assert
+      expect(mockFileHandler.writeFile).toHaveBeenCalledWith(
+        "/audit/audit_1.txt",
+        "Bob;2021-01-01T00:00:00.000Z\nAlice;2021-01-01T01:00:00.000Z"
+      );
+    });
+
+    it("creates new file when current file is at capacity", () => {
+      // Arrange
+      mockFileHandler.getSortedFiles.mockReturnValue(["/audit/audit_1.txt"]);
+      mockFileHandler.readFileLines.mockReturnValue([
+        "Bob;2021-01-01T00:00:00.000Z",
+        "Charlie;2021-01-01T01:00:00.000Z",
+        "David;2021-01-01T02:00:00.000Z",
+      ]);
+
+      // Act
+      auditManager.addRecord("Alice", new Date("2021-01-01T03:00:00Z"));
+
+      // Assert
+      expect(mockFileHandler.writeFile).toHaveBeenCalledWith(
+        "/audit/audit_2.txt",
+        "Alice;2021-01-01T03:00:00.000Z"
+      );
+    });
+
+    it("handles multiple files correctly", () => {
+      // Arrange
+      mockFileHandler.getSortedFiles.mockReturnValue([
+        "/audit/audit_1.txt",
+        "/audit/audit_2.txt",
+      ]);
+      mockFileHandler.readFileLines.mockReturnValue([
+        "Eve;2021-01-01T00:00:00.000Z",
+        "Frank;2021-01-01T01:00:00.000Z",
+      ]);
+
+      // Act
+      auditManager.addRecord("Alice", new Date("2021-01-01T02:00:00Z"));
+
+      // Assert
+      expect(mockFileHandler.writeFile).toHaveBeenCalledWith(
+        "/audit/audit_2.txt",
+        "Eve;2021-01-01T00:00:00.000Z\nFrank;2021-01-01T01:00:00.000Z\nAlice;2021-01-01T02:00:00.000Z"
+      );
+    });
   });
 });

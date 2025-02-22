@@ -1,9 +1,10 @@
-import { IFileSystem } from "../types";
+import { IFileSystem, IFileHandler } from "../types";
 
-export class FileHandler {
+export class FileHandler implements IFileHandler {
   constructor(private readonly fileSystem: IFileSystem) {}
 
   getSortedFiles(directory: string): string[] {
+    // Directory = "audit_logs"
     const filePaths = this.fileSystem.getFiles(directory);
     return this.sortByIndex(filePaths);
   }

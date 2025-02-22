@@ -1,1 +1,1 @@
-export class Bank {}
+export class BankAccount {}

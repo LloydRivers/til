@@ -55,7 +55,10 @@ export class BankAccount implements IBankAccount {
 
     console.log("Date       || Amount || Balance");
     console.log("-------------------------------");
-
+    /*
+If anyone is reading this, the solution below came from:
+https://medium.com/@onlinemsr/javascript-string-format-the-best-3-ways-to-do-it-c6a12b4b94ed#:~:text=String%20format%20table%20structure,values%20in%20a%20table%20structure.
+*/
     this.transactions.forEach((transaction) => {
       const { date, amount, balance } = transaction;
       const title = date.padEnd(titleColumnWidth, "");

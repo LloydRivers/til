@@ -60,7 +60,7 @@ export class BankAccount implements IBankAccount {
       const { date, amount, balance } = transaction;
       const title = date.padEnd(titleColumnWidth, "");
       const price = amount.padEnd(priceColumnWidth, "");
-      const balanceStr = balance.toString().padStart(balanceColumnWidth, ""); // Right-align balance
+      const balanceStr = balance.toString().padStart(balanceColumnWidth, "");
 
       console.log(`${title} || ${price}  || ${balanceStr}`);
     });

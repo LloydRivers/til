@@ -23,9 +23,6 @@ export class BingoBoard {
     this.cells[x][y] = value;
   }
 
-  /*
-  To test this I would also need to make sure that the board is initialized
-  */
   markCell(x: number, y: number): void {
     if (!this.isInitialized()) {
       throw new Error("board not initialized");
@@ -37,9 +34,6 @@ export class BingoBoard {
     return this.marked[x][y];
   }
 
-  /*
-  So I woukd like need to stub this out to already return a true boolean to get through the test
-  */
   isInitialized(): boolean {
     return this.cells.every((row) => row.every((cell) => cell !== null));
   }

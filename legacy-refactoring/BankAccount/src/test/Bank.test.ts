@@ -12,4 +12,9 @@ describe("Bank", () => {
     expect(bank.withdraw).toBeDefined();
     expect(bank.printStatement).toBeDefined();
   });
+
+  it("should have a balance of 0 when instantiated", () => {
+    const bank = new BankAccount();
+    expect(bank.getBalance()).toBe(0);
+  });
 });

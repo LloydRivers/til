@@ -47,6 +47,13 @@ describe("Bank", () => {
     expect(bank.getBalance()).toBe(50);
   });
 
+  it("should push withdrawals to the transactions array", () => {
+    const bank = new BankAccount();
+    bank.deposit(100);
+    bank.withdraw(50);
+    expect(bank.transactions.length).toBe(2);
+  });
+
   it("should not allow negative withdrawals", () => {
     const bank = new BankAccount();
     expect(() => bank.withdraw(-50)).toThrow(
@@ -60,11 +67,11 @@ describe("Bank", () => {
     expect(() => bank.withdraw(100)).toThrow("Insufficient funds");
   });
 
-  //   it("should print a statement", () => {
-  //     const bank = new BankAccount();
-  //     bank.deposit(1000);
-  //     bank.deposit(2000);
-  //     bank.withdraw(500);
-  //     expect(bank.printStatement()).toBe(result);
-  //   });
+  it("should print a statement", () => {
+    const bank = new BankAccount();
+    bank.deposit(1000);
+    bank.deposit(2000);
+    bank.withdraw(1500);
+    bank.printStatement();
+  });
 });

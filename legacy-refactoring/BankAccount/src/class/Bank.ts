@@ -48,7 +48,23 @@ export class BankAccount implements IBankAccount {
     };
     this.transactions.push(transaction);
   }
-  printStatement(): void {}
+  printStatement(): void {
+    const titleColumnWidth = 30;
+    const priceColumnWidth = 10;
+    const balanceColumnWidth = 10; // Balance column width
+
+    console.log("Date       || Amount || Balance");
+    console.log("-------------------------------");
+
+    this.transactions.forEach((transaction) => {
+      const { date, amount, balance } = transaction;
+      const title = date.padEnd(titleColumnWidth, "");
+      const price = amount.padEnd(priceColumnWidth, "");
+      const balanceStr = balance.toString().padStart(balanceColumnWidth, ""); // Right-align balance
+
+      console.log(`${title} || ${price}  || ${balanceStr}`);
+    });
+  }
 
   private validateNonNegativeAmount(
     amount: number,

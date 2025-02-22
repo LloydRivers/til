@@ -40,6 +40,13 @@ export class BankAccount implements IBankAccount {
       throw new Error("Insufficient funds");
     }
     this.balance -= amount;
+    const formattedDate = this.getFormattedDate();
+    const transaction: Transaction = {
+      date: formattedDate,
+      amount: `-${amount}`,
+      balance: this.balance,
+    };
+    this.transactions.push(transaction);
   }
   printStatement(): void {}
 

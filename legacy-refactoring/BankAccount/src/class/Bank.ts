@@ -11,6 +11,14 @@ export class BankAccount implements IBankAccount {
     }
     this.balance += amount;
   }
-  withdraw(amount: number): void {}
+  withdraw(amount: number): void {
+    if (amount < 0) {
+      throw new Error("Cannot withdraw a negative amount");
+    }
+    if (amount > this.balance) {
+      throw new Error("Insufficient funds");
+    }
+    this.balance -= amount;
+  }
   printStatement(): void {}
 }

@@ -1,4 +1,4 @@
-import { BankAccount } from "../class/Bank";
+import { BankAccount } from "../src/class/Bank";
 
 const result = `Date       || Amount || Balance
 2012-01-14 || -500   || 2500

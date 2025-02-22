@@ -1,4 +1,5 @@
 import { IBankAccount } from "../types";
+import { bankConfig } from "../constants";
 
 export class BankAccount implements IBankAccount {
   private balance = 0;
@@ -6,19 +7,30 @@ export class BankAccount implements IBankAccount {
     return this.balance;
   }
   deposit(amount: number): void {
-    if (amount < 0) {
-      throw new Error("Cannot deposit a negative amount");
-    }
+    this.validateNonNegativeAmount(
+      amount,
+      bankConfig.errorMessage.negativeDeposit
+    );
     this.balance += amount;
   }
   withdraw(amount: number): void {
-    if (amount < 0) {
-      throw new Error("Cannot withdraw a negative amount");
-    }
+    this.validateNonNegativeAmount(
+      amount,
+      bankConfig.errorMessage.negativeWithdrawal
+    );
     if (amount > this.balance) {
       throw new Error("Insufficient funds");
     }
     this.balance -= amount;
   }
   printStatement(): void {}
+
+  private validateNonNegativeAmount(
+    amount: number,
+    errorMessage: string
+  ): void {
+    if (amount < 0) {
+      throw new Error(errorMessage);
+    }
+  }
 }

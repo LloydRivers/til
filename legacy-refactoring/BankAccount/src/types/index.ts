@@ -3,3 +3,11 @@ export interface IBankAccount {
   withdraw(amount: number): void;
   printStatement(): void;
 }
+
+export type BankAccountConfig = {
+  errorMessage: {
+    negativeDeposit: string;
+    negativeWithdrawal: string;
+    insufficientFunds: string;
+  };
+};

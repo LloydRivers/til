@@ -11,3 +11,9 @@ export type BankAccountConfig = {
     insufficientFunds: string;
   };
 };
+
+export type Transaction = {
+  date: string;
+  amount: string;
+  balance: number;
+};

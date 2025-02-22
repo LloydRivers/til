@@ -18,9 +18,9 @@ describe("Bank", () => {
     expect(bank.printStatement).toBeDefined();
   });
 
-  it("should have a balance of 0 when instantiated", () => {
+  it("should have a balance of 1000 when instantiated", () => {
     const bank = new BankAccount();
-    expect(bank.getBalance()).toBe(0);
+    expect(bank.getBalance()).toBe(1000);
   });
 
   it("should allow deposits", () => {

@@ -17,4 +17,15 @@ describe("Bank", () => {
     const bank = new BankAccount();
     expect(bank.getBalance()).toBe(0);
   });
+
+  it("should allow deposits", () => {
+    const bank = new BankAccount();
+    expect(bank.deposit(100));
+    expect(bank.getBalance()).toBe(100);
+  });
+
+  it("should not allow negative deposits", () => {
+    const bank = new BankAccount();
+    expect(() => bank.deposit(-100)).toThrow("Cannot deposit a negative ");
+  });
 });

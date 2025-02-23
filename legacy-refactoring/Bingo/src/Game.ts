@@ -1,7 +1,9 @@
+import { Coordinate } from "./Coordinate";
+
 export abstract class Game<T> {
-  abstract defineCell(x: number, y: number, value: T): void;
-  abstract isMarked(x: number, y: number): boolean;
-  abstract markCell(x: number, y: number): void;
+  abstract defineCell(coordinate: Coordinate, value: T): void;
+  abstract isMarked(coordinate: Coordinate): boolean;
+  abstract markCell(coordinate: Coordinate): void;
 
   abstract startGame(): void;
 }

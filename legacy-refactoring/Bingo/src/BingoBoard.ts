@@ -8,13 +8,25 @@ export class BingoBoard extends Game<string> {
 
   constructor(width: number, height: number) {
     super();
-    this.cells = Array.from({ length: width }, () =>
-      Array(height)
-        .fill(null)
-        .map(() => new Cell<string>())
+    this.cells = this.createEmptyCellGrid(width, height);
+    this.marked = this.createEmptyMarkedGrid(width, height);
+  }
+
+  private createEmptyCellGrid(
+    width: number,
+    height: number
+  ): Array<Array<Cell<string> | null>> {
+    return Array.from({ length: width }, () =>
+      Array.from({ length: height }, () => new Cell<string>())
     );
-    this.marked = Array.from({ length: width }, () =>
-      Array(height).fill(false)
+  }
+
+  private createEmptyMarkedGrid(
+    width: number,
+    height: number
+  ): Array<Array<boolean>> {
+    return Array.from({ length: width }, () =>
+      Array.from({ length: height }, () => false)
     );
   }
 

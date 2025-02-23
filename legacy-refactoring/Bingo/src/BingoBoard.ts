@@ -30,6 +30,12 @@ export class BingoBoard extends Game<string> {
     );
   }
 
+  private isValueInGrid(value: string): boolean {
+    return this.cells.some((row) =>
+      row.some((cell) => cell?.getValue() === value)
+    );
+  }
+
   defineCell(coordinate: Coordinate, value: string): void {
     const { x, y } = coordinate;
     const cell = this.cells[x][y];
@@ -37,12 +43,8 @@ export class BingoBoard extends Game<string> {
       throw new Error("cell already defined");
     }
 
-    for (let row = 0; row < this.cells.length; row++) {
-      for (let column = 0; column < this.cells[row].length; column++) {
-        if (value === this.cells[row][column]?.getValue()) {
-          throw new Error(`${value} already present at ${row},${column}`);
-        }
-      }
+    if (this.isValueInGrid(value)) {
+      throw new Error(`${value} already present`);
     }
 
     cell?.define(value);

@@ -1,8 +1,11 @@
-export class BingoBoard {
+import { Game } from "./Game";
+
+export class BingoBoard extends Game<string> {
   private cells: string[][];
   private marked: boolean[][];
 
   constructor(width: number, height: number) {
+    super();
     this.cells = Array.from({ length: width }, () => Array(height).fill(null));
     this.marked = Array.from({ length: width }, () =>
       Array(height).fill(false)
@@ -36,5 +39,9 @@ export class BingoBoard {
 
   isInitialized(): boolean {
     return this.cells.every((row) => row.every((cell) => cell !== null));
+  }
+
+  startGame(): void {
+    console.log("Starting game");
   }
 }

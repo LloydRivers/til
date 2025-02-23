@@ -1,4 +1,5 @@
-import { BingoBoard } from "../src";
+import { BingoBoard } from "../src/BingoBoard";
+import { vi } from "vitest";
 
 describe("BingoBoard", () => {
   let board: BingoBoard;
@@ -9,6 +10,10 @@ describe("BingoBoard", () => {
     board.defineCell(0, 1, "20");
     board.defineCell(1, 0, "30");
     board.defineCell(1, 1, "40");
+  });
+
+  afterEach(() => {
+    board = new BingoBoard(2, 2);
   });
 
   describe("initialization", () => {

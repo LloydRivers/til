@@ -13,10 +13,6 @@ describe("BingoBoard", () => {
     board.defineCell(new Coordinate(1, 1), "40");
   });
 
-  afterEach(() => {
-    board = new BingoBoard(2, 2);
-  });
-
   describe("initialization", () => {
     it("should throw error if cell is already defined", () => {
       expect(() => board.defineCell(new Coordinate(0, 0), "10")).toThrow(

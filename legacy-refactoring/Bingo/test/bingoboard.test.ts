@@ -33,7 +33,7 @@ describe("UK BingoCard", () => {
         (cell) => cell?.getValue() === undefined
       ).length;
 
-      expect(blankCount).toBe(12); // Should log 12, now that you're accessing the correct grid
+      expect(blankCount).toBe(12);
     });
   });
 

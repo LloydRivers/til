@@ -5,7 +5,7 @@ import java.util.Map;
 public class TwelveDays {
     private final int maxDays;
 
-    Map<Integer, String> daysToPresents = Map.ofEntries(
+    private final Map<Integer, String> daysToPresents = Map.ofEntries(
             Map.entry(1, "A partridge in a pear tree."),
             Map.entry(2, "Two turtle doves and"),
             Map.entry(3, "Three french hens"),
@@ -19,7 +19,7 @@ public class TwelveDays {
             Map.entry(11, "Eleven pipers piping"),
             Map.entry(12, "Twelve drummers drumming"));
 
-    public static String numberToOrdinal(int num) {
+    private String numberToOrdinal(int num) {
         return switch (num) {
             case 1 -> "first";
             case 2 -> "second";

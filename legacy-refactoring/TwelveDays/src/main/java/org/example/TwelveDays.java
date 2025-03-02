@@ -1,18 +1,9 @@
 package org.example;
 
-import java.util.HashMap;
 import java.util.Map;
-/*
-* class Bike
-*
-* static methid
-*
-* Bike.method
-*
-* */
+
 public class TwelveDays {
-    private final String patrdige = "A partridge in a pear tree.";
-    private int maxDays;
+    private final int maxDays;
 
     Map<Integer, String> daysToPresents = Map.ofEntries(
             Map.entry(1, "A partridge in a pear tree."),
@@ -26,28 +17,43 @@ public class TwelveDays {
             Map.entry(9, "Nine ladies dancing"),
             Map.entry(10, "Ten lords a-leaping"),
             Map.entry(11, "Eleven pipers piping"),
-            Map.entry(12, "Twelve drummers drumming")
-    );
+            Map.entry(12, "Twelve drummers drumming"));
+
+    public static String numberToOrdinal(int num) {
+        return switch (num) {
+            case 1 -> "first";
+            case 2 -> "second";
+            case 3 -> "third";
+            case 4 -> "fourth";
+            case 5 -> "fifth";
+            case 6 -> "sixth";
+            case 7 -> "seventh";
+            case 8 -> "eighth";
+            case 9 -> "ninth";
+            case 10 -> "tenth";
+            case 11 -> "eleventh";
+            case 12 -> "twelfth";
+            default -> "unknown";
+        };
+    }
 
     public TwelveDays(int day) {
         this.maxDays = day;
     }
 
-    String print() {
-        StringBuilder sb = new StringBuilder("");
+    StringBuilder print() {
+        StringBuilder sb = new StringBuilder();
 
-        // loop to day (12)
-        for(int i = 1; i <= this.maxDays; i++) {
-            System.out.println("On the " + DayManager.dayToString(i) + " day of Christmas " + "\nMy true love sent to me;");
+        for (int i = 1; i <= this.maxDays; i++) {
+            sb.append("On the ").append(numberToOrdinal(i)).append(" day of Christmas\n");
+            sb.append("My true love sent to me;\n");
 
-            for(int j = i; j > 0; j--) {
-                System.out.println(daysToPresents.get(j));
+            for (int j = i; j > 0; j--) {
+                sb.append(daysToPresents.get(j)).append("\n");
             }
-            System.out.println("\n");
+            sb.append("\n");
         }
-        return "";
+
+        return sb;
     }
 }
-
-
-

@@ -42,6 +42,10 @@ public class TwelveDays {
     }
 
     StringBuilder print() {
+        if (this.maxDays < 1 | this.maxDays > 12) {
+            System.out.println("Invalid maxDays value. Please select between 1 and 12");
+        }
+
         StringBuilder sb = new StringBuilder();
 
         for (int i = 1; i <= this.maxDays; i++) {

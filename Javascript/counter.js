@@ -3,5 +3,3 @@ function count(num) {
 
   return (num % 10) + count(Math.floor(num / 10));
 }
-
-console.log(count(123));
